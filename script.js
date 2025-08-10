@@ -5,6 +5,9 @@
   const openBtn = document.getElementById('openBtn');
   const container = document.getElementById('slidesContainer');
 
+  // 🚫 Saat awal load, kunci scroll
+  document.body.classList.add('no-scroll');
+
   function refreshPositions() {
     slides.forEach(s => s.classList.remove('active', 'prev'));
     slides[current].classList.add('active');
@@ -19,34 +22,28 @@
     refreshPositions();
   }
 
-  // buka undangan: crossfade cover -> slides
+  // 🎯 Tombol Buka Undangan
   openBtn.addEventListener('click', () => {
-    // proteksi klik ganda
     openBtn.disabled = true;
 
-    // mulai fade-in slides dan fade-out cover secara bersamaan
-    container.classList.add('show');   // slides mulai fade-in
-    cover.classList.add('fade-out');  // cover mulai fade-out
-
-    // tampilkan slide pertama segera agar fade-in menampilkan konten
+    // Tampilkan slides dan sembunyikan cover
+    container.classList.add('show');
+    cover.classList.add('fade-out');
     goTo(0);
 
-    // saat transisi cover selesai (opacity), sembunyikan dari flow agar tidak tabable
+    // Saat transisi cover selesai
     function onCoverTransitionEnd(e) {
       if (e.propertyName === 'opacity') {
-        // sembunyikan total agar tidak mengambil event pointer
         cover.style.display = 'none';
-
-        // bersihkan listener & re-enable tombol (jika perlu)
+        // ✅ Lepas kunci scroll
+        document.body.classList.remove('no-scroll');
         cover.removeEventListener('transitionend', onCoverTransitionEnd);
-        // tombol tidak perlu aktif lagi, tapi jika mau diaktifkan:
-        // openBtn.disabled = false;
       }
     }
     cover.addEventListener('transitionend', onCoverTransitionEnd);
   });
 
-  // touch navigation (tetap berfungsi)
+  // 📱 Swipe navigasi
   let startY = null;
   container.addEventListener('touchstart', (ev) => {
     if (ev.touches.length !== 1) return;
@@ -64,11 +61,8 @@
     startY = null;
   }, { passive: true });
 
-  // mencegah pull-to-refresh di Chrome mobile
+  // 🔒 Cegah pull-to-refresh di mobile
   container.addEventListener('touchmove', function(e) {
     e.preventDefault();
   }, { passive: false });
-
-  // jangan sembunyikan slides lewat JS lagi — CSS atur visibilitas awal
-  // container.style.display = 'none';
 })();
