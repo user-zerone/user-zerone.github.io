@@ -1,9 +1,9 @@
-// Script.js utama
+// script.js
+
+// Skrip utama
 (() => {
   const slides = Array.from(document.querySelectorAll('.slide'));
   let current = 0;
-  const cover = document.getElementById('cover');
-  const openBtn = document.getElementById('openBtn');
   const container = document.getElementById('slidesContainer');
 
   document.body.classList.add('no-scroll');
@@ -22,47 +22,38 @@
     refreshPositions();
   }
 
-  openBtn.addEventListener('click', () => {
-    openBtn.disabled = true;
+  // Panggil goTo(0) setelah cover hilang untuk menampilkan slide pertama
+  window.goTo = goTo;
 
-    container.classList.add('show');
-    cover.classList.add('fade-out');
-    goTo(0);
-
-    function onCoverTransitionEnd(e) {
-      if (e.propertyName === 'opacity') {
-        cover.style.display = 'none';
-        document.body.classList.remove('no-scroll');
-        cover.removeEventListener('transitionend', onCoverTransitionEnd);
-      }
-    }
-    cover.addEventListener('transitionend', onCoverTransitionEnd);
-  });
-
-  // Swipe navigasi (Tidak ada perubahan, karena tidak ada konflik lagi)
-  let startY = null;
+  // ===== Logika Navigasi Swipe Horizontal =====
+  let startX = null;
   container.addEventListener('touchstart', (ev) => {
     if (ev.touches.length !== 1) return;
-    startY = ev.touches[0].clientY;
+    startX = ev.touches[0].clientX;
   }, { passive: true });
 
   container.addEventListener('touchend', (ev) => {
-    if (startY === null) return;
-    const endY = ev.changedTouches[0].clientY;
-    const dy = startY - endY;
-    if (Math.abs(dy) > 40) {
-      if (dy > 0) goTo(current + 1);
+    if (startX === null) return;
+    const endX = ev.changedTouches[0].clientX;
+    const dx = startX - endX;
+
+    if (Math.abs(dx) > 40) {
+      if (dx > 0) goTo(current + 1);
       else goTo(current - 1);
     }
-    startY = null;
+    startX = null;
   }, { passive: true });
 
-  // Cegah pull-to-refresh, tapi biarkan scroll horizontal
-  container.addEventListener('touchmove', function(e) {
-    if (e.target.closest('.comment-list')) {
-      // Biarkan scroll horizontal berjalan, jangan dicegah
-      return;
-    }
-    e.preventDefault();
-  }, { passive: false });
+  // ===== Logika Mencegah Swipe pada Area Komentar =====
+  const slide9 = document.getElementById('slide9');
+
+// Blokir event touchstart agar tidak merambat ke parent container
+slide9.addEventListener('touchstart', (e) => {
+  // Cek apakah sentuhan dimulai di dalam #comment-list
+  if (e.target.closest('#comment-list')) {
+    // Jika ya, hentikan event agar tidak sampai ke skrip utama
+    e.stopPropagation();
+    console.log("LOG: Touchstart di dalam #comment-list, event dihentikan.");
+  }
+}, { passive: false });
 })();

@@ -58,7 +58,7 @@
   color: #444;
 }
 
-/* Kontainer utama untuk carousel horizontal */
+/* Kontainer utama untuk daftar komentar */
 .comment-list {
   max-width: 600px;
   margin: 0 auto;
@@ -69,17 +69,17 @@
   border-radius: 12px;
   box-sizing: border-box;
 
-  /* Logika baru untuk horizontal scroll */
-  display: flex;
-  overflow-x: auto;
+  /* Logika untuk scroll vertikal */
+  display: block;
+  flex-grow: 1; /* PENTING: Membuat elemen ini mengisi sisa ruang yang tersedia */
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
 }
 
 /* Styling untuk scrollbar (opsional) */
 .comment-list::-webkit-scrollbar {
-  height: 10px;
+  width: 10px; /* Lebar scrollbar vertikal */
 }
 
 .comment-list::-webkit-scrollbar-track {
@@ -91,14 +91,6 @@
   border-radius: 10px;
 }
 
-/* Setiap grup (page) komentar */
-.comment-group {
-  flex: 0 0 100%; /* Setiap grup mengambil 100% lebar container */
-  scroll-snap-align: center;
-  box-sizing: border-box;
-  padding: 0 10px;
-}
-
 /* Setiap item komentar (di dalam grup) */
 .single-comment {
   background: #f9f9f9;
@@ -107,7 +99,6 @@
   padding: 12px;
   margin-bottom: 10px;
   box-sizing: border-box;
-  width: 100%; /* Mengisi penuh grup */
 }
 
 /* Header komentar, berisi emoji dan info */

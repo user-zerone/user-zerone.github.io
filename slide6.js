@@ -1,25 +1,33 @@
 /* =====================
-   SLIDE 6 - GALERI PREMIUM
+   SLIDE 6 - GALERI PREMIUM (Tampilan Grid)
    ===================== */
 
 document.addEventListener("DOMContentLoaded", function () {
-  const galleryContainer = document.getElementById('premium-gallery');
+  const slide6 = document.getElementById('slide6');
 
-  // Buat struktur galeri
-  galleryContainer.innerHTML = `
-    <div class="gallery-container">
-      <img id="mainImage" src="img/premium1.jpg" alt="Foto Utama" class="main-photo">
-      <div class="thumbnail-wrapper">
-        <button class="arrow-btn" id="leftArrow">&#10094;</button>
-        <div class="thumbnail-container" id="thumbnailContainer"></div>
-        <button class="arrow-btn" id="rightArrow">&#10095;</button>
-      </div>
-    </div>
-  `;
+  // Pastikan skrip hanya berjalan di slide 6
+  if (!slide6) return;
+  
+  const galleryContainer = document.createElement('div');
+  galleryContainer.id = 'premium-gallery-grid';
+  galleryContainer.className = 'gallery-grid';
+  slide6.appendChild(galleryContainer);
 
   const totalImages = 10;
-  const mainImage = document.getElementById('mainImage');
-  const thumbnailContainer = document.getElementById('thumbnailContainer');
+  
+  // Buat div untuk foto utama
+  const mainPhotoDiv = document.createElement('div');
+  mainPhotoDiv.className = 'main-photo-container';
+  const mainImage = document.createElement('img');
+  mainImage.id = 'mainImage';
+  mainImage.src = 'img/premium1.jpg'; // Tampilkan foto pertama sebagai default
+  mainPhotoDiv.appendChild(mainImage);
+  galleryContainer.appendChild(mainPhotoDiv);
+
+  // Buat div untuk thumbnail grid
+  const thumbnailGrid = document.createElement('div');
+  thumbnailGrid.className = 'thumbnail-grid';
+  galleryContainer.appendChild(thumbnailGrid);
 
   // Generate thumbnail otomatis
   for (let i = 1; i <= totalImages; i++) {
@@ -29,8 +37,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (i === 1) thumb.classList.add('active');
 
     thumb.addEventListener('click', function () {
-      document.querySelectorAll('.thumbnail-container img').forEach(img => img.classList.remove('active'));
+      // Hapus kelas 'active' dari semua thumbnail
+      document.querySelectorAll('.thumbnail-grid img').forEach(img => img.classList.remove('active'));
+      
+      // Tambahkan kelas 'active' ke thumbnail yang baru diklik
       this.classList.add('active');
+      
+      // Efek fade-in/fade-out untuk foto utama
       mainImage.style.opacity = '0';
       setTimeout(() => {
         mainImage.src = this.src;
@@ -38,59 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 200);
     });
 
-    thumbnailContainer.appendChild(thumb);
+    thumbnailGrid.appendChild(thumb);
   }
-
-  // Fungsi geser thumbnail dengan tombol
-  document.getElementById('leftArrow').addEventListener('click', () => {
-    thumbnailContainer.scrollBy({ left: -150, behavior: 'smooth' });
-
-  });
-
-  document.getElementById('rightArrow').addEventListener('click', () => {
-    thumbnailContainer.scrollBy({ left: 150, behavior: 'smooth' });
-
-  });
-
-  // ==== FUNGSI SWIPE UNTUK THUMBNAIL ====
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-
-  thumbnailContainer.addEventListener('mousedown', (e) => {
-    isDown = true;
-    startX = e.pageX - thumbnailContainer.offsetLeft;
-    scrollLeft = thumbnailContainer.scrollLeft;
-  });
-
-  thumbnailContainer.addEventListener('mouseleave', () => {
-    isDown = false;
-  });
-
-  thumbnailContainer.addEventListener('mouseup', () => {
-    isDown = false;
-  });
-
-  thumbnailContainer.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - thumbnailContainer.offsetLeft;
-    const walk = (x - startX) * 1.5; // kecepatan geser
-    thumbnailContainer.scrollLeft = scrollLeft - walk;
-  });
-
-  // Versi untuk layar sentuh (HP)
-  let touchStartX = 0;
-  let touchScrollLeft = 0;
-
-  thumbnailContainer.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].pageX;
-    touchScrollLeft = thumbnailContainer.scrollLeft;
-  });
-
-  thumbnailContainer.addEventListener('touchmove', (e) => {
-    const touchX = e.touches[0].pageX;
-    const walk = (touchX - touchStartX) * 1.5;
-    thumbnailContainer.scrollLeft = touchScrollLeft - walk;
-  });
 });

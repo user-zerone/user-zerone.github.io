@@ -7,6 +7,7 @@ const client = createClient(supabaseUrl, supabaseKey);
 
 const slide9Inner = document.querySelector("#slide9 .inner");
 
+// HTML untuk formulir dan judul komentar
 slide9Inner.innerHTML = `
   <h2 class="rsvp-title">Konfirmasi Kehadiran</h2>
   <form id="rsvp-form" class="rsvp-form">
@@ -36,15 +37,6 @@ const statusMap = {
   ragu: "🤔 Ragu-ragu"
 };
 
-// Fungsi untuk membagi array menjadi chunk-chunk (grup)
-function chunkArray(arr, size) {
-  const chunkedArr = [];
-  for (let i = 0; i < arr.length; i += size) {
-    chunkedArr.push(arr.slice(i, i + size));
-  }
-  return chunkedArr;
-}
-
 // Fungsi memuat komentar
 async function loadComments() {
   const { data, error } = await client
@@ -57,29 +49,19 @@ async function loadComments() {
     console.error("Gagal memuat komentar:", error);
     return;
   }
-
-  // Bagi komentar menjadi grup-grup yang berisi 3 komentar
-  const commentGroups = chunkArray(data, 3);
   
-  let allHtml = '';
-
-  commentGroups.forEach(group => {
-    // Buat HTML untuk setiap komentar dalam grup
-    const groupHtml = group.map(c => `
-      <div class="single-comment">
-        <div class="comment-header">
-          <span class="emoji">❤️</span>
-          <div>
-            <p><strong>${c.name}</strong> <span class="status-label">${statusMap[c.Kehadiran] || c.Kehadiran}</span></p>
-            <p class="comment-text">${c.comment || ""}</p>
-          </div>
+  // Memetakan data menjadi HTML
+  const allHtml = data.map(c => `
+    <div class="single-comment">
+      <div class="comment-header">
+        <span class="emoji">❤️</span>
+        <div>
+          <p><strong>${c.name}</strong> <span class="status-label">${statusMap[c.Kehadiran] || c.Kehadiran}</span></p>
+          <p class="comment-text">${c.comment || ""}</p>
         </div>
       </div>
-    `).join('');
-    
-    // Bungkus grup komentar dengan div .comment-group
-    allHtml += `<div class="comment-group">${groupHtml}</div>`;
-  });
+    </div>
+  `).join('');
 
   commentList.innerHTML = allHtml;
 }
@@ -112,6 +94,26 @@ form.addEventListener("submit", async function (e) {
     status.innerText = "❌ Gagal mengirim. Silakan coba lagi.";
   }
 });
+
+// ====== LOGIKA UNTUK MENCEGAH SWIPE HORIZONTAL DI DALAM KOMENTAR ======
+let startX = 0;
+let startY = 0;
+
+commentList.addEventListener('touchstart', (e) => {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+}, { passive: true });
+
+commentList.addEventListener('touchmove', (e) => {
+  const dx = Math.abs(e.touches[0].clientX - startX);
+  const dy = Math.abs(e.touches[0].clientY - startY);
+
+  // Jika pergerakan horizontal (dx) lebih besar dari pergerakan vertikal (dy)
+  // maka kita cegah perambatan event
+  if (dx > dy) {
+    e.stopPropagation();
+  }
+}, { passive: false });
 
 // Muat komentar saat pertama kali
 loadComments();
