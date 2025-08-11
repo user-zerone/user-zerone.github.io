@@ -1,35 +1,10 @@
-
-
-/* Judul Halaman 2 */
-.section-title {
-  font-family: 'Great Vibes', cursive;
-  font-size: 2rem;
-  color: #d4af37;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-/* Teks umum Halaman 2 */
-.section-text {
+.quotes {
   font-size: 1.1rem;
   color: #555;
-  margin: 10px 20px;
-  line-height: 1.6;
-  text-align: center;
-}
-
-/* Detail acara */
-.event-details {
-  background: #f9f5eb;
-  padding: 15px;
-  border: 2px solid #d4af37;
-  border-radius: 10px;
-  margin: 20px auto;
-  max-width: 300px;
-  text-align: left;
-}
-
-.event-details p {
-  margin: 5px 0;
-  font-size: 1rem;
+  max-width: 600px; /* Lebar maksimum teks */
+  margin: 20px auto; /* Tengah secara horizontal */
+  padding: 20px;
+  line-height: 1.8;
+  text-align: justify;
+  text-align-last: center;
 }

@@ -1,0 +1,140 @@
+/* =========================
+   Slide 9 - RSVP & Komentar
+   ========================= */
+#slide9 {
+  text-align: center;
+  padding: 20px;
+  background: #fefefe;
+}
+
+.rsvp-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.rsvp-form {
+  max-width: 500px;
+  margin: 0 auto 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rsvp-form input,
+.rsvp-form select,
+.rsvp-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.rsvp-form button {
+  background: #87ceeb; /* Sky blue */
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.rsvp-form button:hover {
+  background: #5cb8d6;
+}
+
+.status-msg {
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
+
+.comment-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+/* Kontainer utama untuk carousel horizontal */
+.comment-list {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+  border: 1px solid #e0e6ea;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  box-sizing: border-box;
+
+  /* Logika baru untuk horizontal scroll */
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+/* Styling untuk scrollbar (opsional) */
+.comment-list::-webkit-scrollbar {
+  height: 10px;
+}
+
+.comment-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.comment-list::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.12);
+  border-radius: 10px;
+}
+
+/* Setiap grup (page) komentar */
+.comment-group {
+  flex: 0 0 100%; /* Setiap grup mengambil 100% lebar container */
+  scroll-snap-align: center;
+  box-sizing: border-box;
+  padding: 0 10px;
+}
+
+/* Setiap item komentar (di dalam grup) */
+.single-comment {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  width: 100%; /* Mengisi penuh grup */
+}
+
+/* Header komentar, berisi emoji dan info */
+.comment-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.emoji {
+  font-size: 1.4rem;
+  flex: 0 0 34px;
+  line-height: 1;
+}
+
+.status-label {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+/* Teks komentar */
+.comment-text {
+  margin-top: 6px;
+  font-size: 1rem;
+  color: #555;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}

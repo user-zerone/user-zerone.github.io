@@ -114,8 +114,9 @@ html, body {
 .slide {
   position: absolute;
   inset: 0;
-  margin: 20px;
-  margin-bottom: 20%;
+  margin: 5%;
+  margin-bottom: 19%;
+  
   border: 3px solid #d4af37;
   border-radius: 15px;
   background: white;

@@ -43,11 +43,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Fungsi geser thumbnail dengan tombol
   document.getElementById('leftArrow').addEventListener('click', () => {
-    thumbnailContainer.scrollBy({ left: -200, behavior: 'smooth' });
+    thumbnailContainer.scrollBy({ left: -150, behavior: 'smooth' });
+
   });
 
   document.getElementById('rightArrow').addEventListener('click', () => {
-    thumbnailContainer.scrollBy({ left: 200, behavior: 'smooth' });
+    thumbnailContainer.scrollBy({ left: 150, behavior: 'smooth' });
+
   });
 
   // ==== FUNGSI SWIPE UNTUK THUMBNAIL ====
