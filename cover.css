@@ -1,4 +1,7 @@
-/* cover.css */
+/* ================================================== */
+/* File: cover.css                   */
+/* Versi Lengkap, Sudah Diperbaiki dan Digabungkan    */
+/* ================================================== */
 
 /* ===== Cover (Halaman 0) ===== */
 .cover {
@@ -8,11 +11,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  z-index: 6; /* pastikan cover di atas slides */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 6;
   transition: opacity 1200ms cubic-bezier(.22,.9,.36,1), transform 1200ms cubic-bezier(.22,.9,.36,1);
   will-change: opacity, transform;
+  overflow: hidden; /* Sembunyikan bagian gambar yang keluar frame saat zoom */
+  animation: kenBurns 20s ease-out forwards; /* Terapkan animasi latar */
 }
+
 .cover::after {
   content: '';
   position: absolute;
@@ -20,22 +28,64 @@
   background: rgba(0,0,0,0.7);
 }
 
-/* Konten cover */
+/* ===== Konten di dalam Cover ===== */
 .cover-overlay {
   position: relative;
   z-index: 2;
   text-align: center;
   color: white;
 }
-.cover-overlay .bride-groom {
+
+/* Judul Utama */
+.wedding-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d4af37;
+  margin-bottom: 10px;
+}
+
+/* Garis Pembatas */
+.divider {
+  width: 180px;
+  height: 2px;
+  background-color: #d4af37;
+  margin: 0 auto 35px auto;
+}
+
+/* Foto Mempelai */
+.cover-foto {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #d4af37;
+  margin-bottom: 10px;
+}
+
+/* Nama Mempelai */
+.bride-groom {
   font-family: 'Great Vibes', cursive;
   font-size: 3rem;
   margin-bottom: 0.5rem;
 }
+
+.bride-groom .name {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d4af37;
+  margin-bottom: 0.2em;
+  display: inline-block;
+}
+
+/* Tanggal */
 .cover-overlay .date {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
 }
+
+/* Tombol Buka Undangan */
 .cover-overlay button {
   padding: 12px 24px;
   font-size: 1rem;
@@ -48,74 +98,84 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-/* photo depan */
-.cover-foto {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 5px solid #d4af37; /* Opsional: Anda bisa tambahkan border */
-  margin-bottom: 10px;
-}
+/* ===== Transisi & State Lainnya ===== */
 
-.cover-content {
-  text-align: center;
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.75);
-  border-radius: 12px;
-}
-
-/* Judul */
-.wedding-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #d4af37;
-  margin-bottom: 10px;
-}
-
-/* Garis pembatas */
-.divider {
-  width: 180px;
-  height: 2px;
-  background-color: #d4af37;
-  margin: 0 auto 35px auto;
-}
-
-/* Nama mempelai */
-.bride-groom .name {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #d4af37;
-  margin-bottom: 0.2em;
-  display: inline-block;
-}
-
-/* cover fade-out (dipanggil saat buka) */
+/* Efek saat cover menghilang */
 .cover.fade-out {
   opacity: 0;
   transform: translateY(-18px) scale(0.985);
   pointer-events: none;
 }
 
-/* Bikin cover fixed supaya menempel di layar penuh */
-.cover {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-}
-
-/* tombol disable style saat proses transisi (opsional) */
+/* Style tombol saat di-disable (setelah diklik) */
 #openBtn[disabled] {
   cursor: default;
   opacity: 0.8;
   filter: saturate(0.9);
 }
 
-/* Saat cover aktif, kunci scroll */
+/* ===== Animasi Entrance (Saat Muncul) ===== */
+
+/* 1. Definisikan keyframes yang dibutuhkan */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes stretchIn {
+  from { width: 0; opacity: 0; }
+  to { width: 180px; opacity: 1; }
+}
+
+
+@keyframes kenBurns {
+  from { transform: scale(1.05); }
+  to { transform: scale(1); }
+}
+
+/* 2. Atur kondisi awal elemen sebelum animasi */
+.cover-overlay > .wedding-title,
+.cover-overlay > .divider,
+.cover-overlay > .cover-foto,
+.cover-overlay > .bride-groom,
+.cover-overlay > .date,
+.cover-overlay > button {
+  opacity: 0;
+}
+
+/* 3. Terapkan animasi dengan menyertakan 'forwards' di setiap baris */
+.cover-overlay > .wedding-title {
+  animation: fadeInUp 1s ease-out 0.3s forwards;
+}
+
+.cover-overlay > .divider {
+  animation: stretchIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.6s forwards;
+}
+
+.cover-overlay > .cover-foto {
+  animation: scaleIn 1s ease-out 0.9s forwards;
+}
+
+.cover-overlay > .bride-groom {
+  animation: fadeInUp 1s ease-out 1.2s forwards;
+}
+
+.cover-overlay > .date {
+  animation: fadeInUp 1s ease-out 1.4s forwards;
+}
+
+.cover-overlay > button {
+  animation: fadeInUp 1s ease-out 1.6s forwards;
+}
+
+/* ===== Pengaturan Body & Konten Utama ===== */
+
+/* Kunci scroll body saat cover aktif */
 body.no-scroll {
   overflow: hidden;
   height: 100vh;
@@ -134,4 +194,12 @@ body.no-scroll {
 #slidesContainer.show {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* .cover-content tidak terpakai di HTML Anda, tapi saya biarkan jika diperlukan */
+.cover-content {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
 }

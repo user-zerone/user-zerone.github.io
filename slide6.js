@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   galleryContainer.className = 'gallery-grid';
   slide6.appendChild(galleryContainer);
 
-  const totalImages = 10;
+  const totalImages = 12;
   
   // Buat div untuk foto utama
   const mainPhotoDiv = document.createElement('div');
