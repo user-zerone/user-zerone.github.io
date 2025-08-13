@@ -1,4 +1,13 @@
-/* style.css */
+/* ================================================== */
+/* style.css - Versi Rapi dan Responsif               */
+/* ================================================== */
+
+/* ===== Aturan Dasar dan Variabel CSS ===== */
+:root {
+  --primary-color: #d4af37;
+  --secondary-bg: black;
+  --text-color: white;
+}
 
 * {
   box-sizing: border-box;
@@ -7,63 +16,73 @@
 }
 html, body {
   height: 100%;
-  font-family: 'Playfair Display', serif;
-  color: #333;
+  font-family: 'Lato', sans-serif;
+  color: var(--text-color);
+  font-size: 16px;
 }
-
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap');
 
-/* ===== Slides Container ===== */
+/* ===== Konten Utama (Slides Container) ===== */
 #slidesContainer {
   width: 100%;
   height: 100vh;
   position: relative;
-  overflow: hidden;
-  background: #faf7f0;
+  overflow: hidden; /* Pertahankan ini agar slide horizontal bekerja */
+  background: url('img/cover-bg.jpg') center/cover no-repeat;;
 }
 
-/* ===== Slide ===== */
+/* ===== Slide (Halaman Konten) ===== */
 .slide {
   position: absolute;
   inset: 0;
-  margin: 5%;
-  margin-bottom: 19%;
-
-  border: 3px solid #d4af37;
-  border-radius: 15px;
-  background: white;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-
-  /* MODIFIKASI: Gunakan translateX untuk menyembunyikan di kanan */
+  margin: 3vmin;
+  margin-bottom: 18vmin;
+  
+  
+  border-radius: 1.5vmin;
+  background: var(--bg-dark-overlay);
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+  
   transform: translateX(100%);
-  transition: transform 0.6s ease, opacity 0.3s ease;
+  transition: transform 0.6s ease-in-out, opacity 0.3s ease-in-out;
   opacity: 0;
   pointer-events: none;
 }
 
-.slide .inner {
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: bold;
-  font-family: 'Playfair Display', serif;
-}
-
-/* State classes */
+/* State Aktif dan Sebelumnya */
 .slide.active {
-  /* MODIFIKASI: Posisikan di tengah */
   transform: translateX(0);
   opacity: 1;
   pointer-events: auto;
 }
 .slide.prev {
-  /* MODIFIKASI: Geser slide yang dilewati ke kiri */
   transform: translateX(-100%);
   opacity: 0;
 }
 
+/* ===== Konten di dalam Slide ===== */
 .slide .inner {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Ganti ini agar konten mulai dari atas */
   height: 100%;
-  padding-bottom: 20px; /* Tambahkan padding di bawah */
+  padding: 3vmin;
+  text-align: center;
+  
+  /* BARIS KUNCI UNTUK MENGAKTIFKAN SCROLL VERTIKAL */
+  overflow-y: auto;
+}
+
+/* Judul dan teks di dalam slide */
+.slide .inner h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 5vmin, 2.5rem);
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+}
+.slide .inner p {
+  font-size: clamp(1rem, 3vmin, 1.2rem);
+  line-height: 1.6;
 }

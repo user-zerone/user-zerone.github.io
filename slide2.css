@@ -1,7 +1,5 @@
 .quotes {
   font-size: 1.1rem;
-  color: #555;
-  max-width: 600px; /* Lebar maksimum teks */
   margin: 20px auto; /* Tengah secara horizontal */
   padding: 20px;
   line-height: 1.8;

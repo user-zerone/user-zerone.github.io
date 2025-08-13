@@ -45,7 +45,7 @@
   }, { passive: true });
 
   // ===== Logika Mencegah Swipe pada Area Komentar =====
-  const slide9 = document.getElementById('slide9');
+  const slide9 = document.getElementById('slide8');
 
 // Blokir event touchstart agar tidak merambat ke parent container
 slide9.addEventListener('touchstart', (e) => {

@@ -1,0 +1,40 @@
+
+
+/* ===== Slide 3 - Mempelai pria ===== */
+.slide .section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  text-align: center;
+  color: var(--primary-color, #d4af37);
+  margin-bottom: 15px;
+}
+
+.slide .quotes {
+  font-style: italic;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.6;
+  color: var(--text-color, #333);
+  margin: 0 auto 20px;
+  max-width: 600px;
+}
+
+.bride-photo {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.bride-photo img {
+  object-fit: cover;
+  width: 300px;
+  height: 300px;
+  border-radius: 2%;
+  border: 4px solid var(--primary-color, #d4af37);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.family-info {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--text-color, #333);
+}
