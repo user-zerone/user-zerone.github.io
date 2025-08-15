@@ -22,6 +22,12 @@
         📍 Lihat Lokasi di Google Maps
       </a>
     </div>
+    <iframe class="event-map-iframe" 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.568461461937!2d108.25608677464095!3d-7.354664872412581!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjEnMTYuOCJTIDEwOMKwMTUnMjkuMyJF!5e0!3m2!1sid!2sid!4v1623838428383!5m2!1sid!2sid"
+      allowfullscreen="" 
+      loading="lazy">
+    </iframe>
+
   `;
 
   // Countdown Timer

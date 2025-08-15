@@ -6,11 +6,22 @@ Isi html
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Undangan Pernikahan</title>
+
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="cover.css" />
+
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="slide1.css">
+  <link rel="stylesheet" href="slide2.css">
+  <link rel="stylesheet" href="slide3.css">
+  <link rel="stylesheet" href="slide4.css">
+  <link rel="stylesheet" href="slide6.css">
+  <link rel="stylesheet" href="slide8.css">
+    <link rel="stylesheet" href="slide9.css">
+
 </head>
 <body>
-  <!-- Halaman 0 – Intro / Loading Screen -->
   <section id="cover" class="cover">
     <div class="cover-overlay">
       <h1 class="wedding-title">Undangan Pernikahan</h1>
@@ -26,21 +37,62 @@ Isi html
     </div>
   </section>
 
-  <!-- Slides Halaman 1–10 -->
   <main id="slidesContainer">
-    <section class="slide"><div class="inner">Halaman 1 – Cover / Pembuka</div></section>
-    <section class="slide"><div class="inner">Halaman 2 – Salam Pembuka</div></section>
-    <section class="slide"><div class="inner">Halaman 3 – Profil Mempelai</div></section>
-    <section class="slide"><div class="inner">Halaman 4 – Detail Acara</div></section>
+    <section class="slide" id="slide1">
+      <div class="inner">
+        </div>
+    </section>
+
+    <section class="slide" id="slide2">
+      <div class="inner">
+        </div>
+    </section>    
+
+    <section class="slide" id="slide3a">
+      <div class="inner">
+        </div>
+    </section>  
+    
+    <section class="slide" id="slide3b">
+      <div class="inner">
+        </div>
+    </section>  
+    
+        <section class="slide" id="slide4">
+      <div class="inner">
+        </div>
+    </section>  
+    
     <section class="slide"><div class="inner">Halaman 5 – Love Story</div></section>
-    <section class="slide"><div class="inner">Halaman 6 – Galeri Foto</div></section>
-    <section class="slide"><div class="inner">Halaman 7 – RSVP Kehadiran</div></section>
-    <section class="slide"><div class="inner">Halaman 8 – Buku Tamu / Ucapan</div></section>
-    <section class="slide"><div class="inner">Halaman 9 – Kirim Hadiah</div></section>
-    <section class="slide"><div class="inner">Halaman 10 – Penutup</div></section>
+    <section id="slide6" class="slide">
+      <h2>Galeri Premium</h2>
+      <div id="premium-gallery" class="premium-gallery"></div>
+    </section>
+
+    <section class="slide"><div class="inner">Halaman 7 – Kirim Hadiah</div></section>
+
+    <section class="slide" id="slide8">
+      <div class="inner"></div>
+    </section>
+
+    <section class="slide" id="slide9">
+      <div class="inner"></div>
+    </section>
   </main>
 
   <script src="script.js"></script>
+  <script src="cover.js"></script>
+
+  <script src="slide1.js"></script>
+  <script src="slide2.js"></script>
+  <script src="slide3a.js"></script>
+  <script src="slide3b.js"></script>
+  <script src="slide4.js"></script>
+  <script src="slide6.js"></script>
+  <script src="slide9.js"></script>
+
+
+  <script type="module" src="slide8.js"></script>
 </body>
 </html>
 
@@ -50,83 +102,54 @@ Isi html
 Script
 Isi
 (() => {
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  let current = 0;
-  const cover = document.getElementById('cover');
-  const openBtn = document.getElementById('openBtn');
-  const container = document.getElementById('slidesContainer');
+  const slide4 = document.querySelectorAll('.slide')[4].querySelector('.inner');
 
-  function refreshPositions() {
-    slides.forEach(s => s.classList.remove('active', 'prev'));
-    slides[current].classList.add('active');
-    if (current > 0) {
-      slides[current - 1].classList.add('prev');
+  slide4.innerHTML = `
+    <h2 class="section-title">Detail Acara</h2>
+    
+    <div class="event-detail">
+      <p><strong>Acara:</strong> Akad & Resepsi</p>
+      <p><strong>Waktu:</strong> 5 April 2026 • 10.00 WIB s.d selesai</p>
+      <p><strong>Tempat:</strong> Tasik, Rumah Cici</p>
+    </div>
+
+    <div class="countdown" id="countdown-timer">
+      <span class="time-box"><span id="days">00</span><small>Hari</small></span>
+      <span class="time-box"><span id="hours">00</span><small>Jam</small></span>
+      <span class="time-box"><span id="minutes">00</span><small>Menit</small></span>
+      <span class="time-box"><span id="seconds">00</span><small>Detik</small></span>
+    </div>
+
+    <div class="event-map">
+      <a href="https://maps.app.goo.gl/wy5CNYcC6jJnFeY77" target="_blank">
+        📍 Lihat Lokasi di Google Maps
+      </a>
+    </div>
+  `;
+
+  // Countdown Timer
+  const targetDate = new Date("2026-04-05T10:00:00+07:00").getTime();
+
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance <= 0) {
+      clearInterval(timer);
+      document.getElementById("countdown-timer").innerHTML = "<p>Acara Sedang Berlangsung 🎉</p>";
+      return;
     }
-  }
 
-  function goTo(index) {
-    if (index < 0 || index >= slides.length) return;
-    current = index;
-    refreshPositions();
-  }
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  // buka undangan: crossfade cover -> slides
-  openBtn.addEventListener('click', () => {
-    // proteksi klik ganda
-    openBtn.disabled = true;
-
-    // Tambahkan kelas no-scroll ke body saat cover aktif
-    document.body.classList.add('no-scroll');
-
-    // mulai fade-in slides dan fade-out cover secara bersamaan
-    container.classList.add('show');   // slides mulai fade-in
-    cover.classList.add('fade-out');  // cover mulai fade-out
-
-    // tampilkan slide pertama segera agar fade-in menampilkan konten
-    goTo(0);
-
-    // saat transisi cover selesai (opacity), sembunyikan dari flow agar tidak tabrakan
-    function onCoverTransitionEnd(e) {
-      if (e.propertyName === 'opacity') {
-        // sembunyikan total agar tidak mengambil event pointer
-        cover.style.display = 'none';
-        // Hapus kelas no-scroll dari body setelah cover disembunyikan
-        document.body.classList.remove('no-scroll');
-
-        // bersihkan listener & re-enable tombol (jika perlu)
-        cover.removeEventListener('transitionend', onCoverTransitionEnd);
-        // tombol tidak perlu aktif lagi, karena cover sudah hilang
-        // openBtn.disabled = false;
-      }
-    }
-    cover.addEventListener('transitionend', onCoverTransitionEnd);
-  });
-
-  // touch navigation (tetap berfungsi)
-  let startY = null;
-  container.addEventListener('touchstart', (ev) => {
-    if (ev.touches.length !== 1) return;
-    startY = ev.touches[0].clientY;
-  }, { passive: true });
-
-  container.addEventListener('touchend', (ev) => {
-    if (startY === null) return;
-    const endY = ev.changedTouches[0].clientY;
-    const dy = startY - endY;
-    if (Math.abs(dy) > 40) {
-      if (dy > 0) goTo(current + 1);
-      else goTo(current - 1);
-    }
-    startY = null;
-  }, { passive: true });
-
-  // mencegah pull-to-refresh di Chrome mobile
-  container.addEventListener('touchmove', function(e) {
-    e.preventDefault();
-  }, { passive: false });
-
-  // jangan sembunyikan slides lewat JS lagi - CSS atur visibilitas awal
-  // container.style.display = 'none';
+    document.getElementById("days").innerText = String(days).padStart(2, "0");
+    document.getElementById("hours").innerText = String(hours).padStart(2, "0");
+    document.getElementById("minutes").innerText = String(minutes).padStart(2, "0");
+    document.getElementById("seconds").innerText = String(seconds).padStart(2, "0");
+  }, 1000);
 })();
 
 
@@ -134,192 +157,70 @@ Isi
 
 Style
 Isi
-* { 
-  box-sizing: border-box; 
-  margin: 0; 
-  padding: 0; 
+
+
+/* ===== Slide 5 - Detail Acara ===== */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  text-align: center;
+  color: var(--primary-color, #d4af37);
+  margin-bottom: 20px;
 }
-html, body { 
-  height: 100%; 
-  font-family: 'Playfair Display', serif; 
-  color: #333; 
+
+.event-detail {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--text-color, #333);
+  margin-bottom: 20px;
 }
 
+.event-detail p {
+  margin: 5px 0;
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap');
-
-/* ===== Cover (Halaman 0) ===== */
-.cover {
-  width: 100%;
-  height: 100vh;
-  background: url('img/cover-bg.jpg') center/cover no-repeat;
+.countdown {
   display: flex;
-  align-items: center;
   justify-content: center;
-  position: relative;
+  gap: 10px;
+  margin-bottom: 20px;
 }
-.cover::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-}
-.cover-overlay {
-  position: relative;
-  z-index: 2;
+
+.time-box {
+  background: var(--secondary-bg, #faf7f0);
+  padding: 10px 15px;
+  border-radius: 8px;
   text-align: center;
-  color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-.cover-overlay .bride-groom {
-  font-family: 'Great Vibes', cursive;
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
-}
-.cover-overlay .date {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
-}
-.cover-overlay button {
-  padding: 12px 24px;
-  font-size: 1rem;
-  border: none;
-  background: linear-gradient(45deg, #d4af37, #f7e7ce);
-  color: #4b3832;
+
+.time-box span {
+  display: block;
+  font-size: 1.5rem;
   font-weight: bold;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  color: var(--primary-color, #d4af37);
 }
 
-/* photo depan */
-.cover-foto {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 5px solid #d4af37; /* Opsional: Anda bisa tambahkan border */
-  margin-bottom: 10px;
+.time-box small {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-color, #333);
 }
 
-
-/* Konten cover */
-.cover-content {
+.event-map {
   text-align: center;
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.75);
-  border-radius: 12px;
 }
 
-/* Judul */
-.wedding-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #d4af37;
-  margin-bottom: 10px;
-}
-
-/* Garis pembatas */
-.divider {
-  width: 180px;
-  height: 2px;
-  background-color: #d4af37;
-  margin: 0 auto 35px auto;
-}
-
-/* Nama mempelai */
-.bride-groom .name {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #d4af37;
-  margin-bottom: 0.2em;
+.event-map a {
   display: inline-block;
+  padding: 10px 20px;
+  background: var(--primary-color, #d4af37);
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: background 0.3s;
 }
 
-/* ===== Slides Container ===== */
-#slidesContainer {
-  width: 100%;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  background: #faf7f0;
-}
-
-/* ===== Slide ===== */
-.slide {
-  position: absolute;
-  inset: 0;
-  margin: 20px;
-  margin-bottom: 20%;
-  border: 3px solid #d4af37;
-  border-radius: 15px;
-  background: white;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  transform: translateY(100%);
-  transition: transform 0.6s ease, opacity 0.3s ease;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.slide .inner {
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: bold;
-  font-family: 'Playfair Display', serif;
-}
-
-/* State classes */
-.slide.active { 
-  transform: translateY(0); 
-  opacity: 1;
-  pointer-events: auto;
-}
-.slide.prev { 
-  transform: translateY(-100%); 
-  opacity: 0;
-}
-/* ============ TRANSITION / CROSSFADE ============ */
-
-/* pastikan cover di atas slides */
-.cover {
-  z-index: 6;
-  transition: opacity 1200ms cubic-bezier(.22,.9,.36,1), transform 1200ms cubic-bezier(.22,.9,.36,1);
-  will-change: opacity, transform;
-}
-
-/* cover fade-out (dipanggil saat buka) */
-.cover.fade-out {
-  opacity: 0;
-  transform: translateY(-18px) scale(0.985);
-  pointer-events: none;
-}
-
-/* slides container default: ada di bawah cover, tapi invisible */
-#slidesContainer {
-  z-index: 2;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1200ms cubic-bezier(.22,.9,.36,1);
-  will-change: opacity;
-  display: block; /* tetap block untuk crossfade */
-}
-
-/* ketika show, slides akan terlihat */
-#slidesContainer.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* prevent content shift saat cover dihilangkan:
-   pastikan slides tetap berada di tempat yang sama */
-#slidesContainer .slide {
-  /* sudah ada transition transform/opacity di file Anda */
-}
-
-/* tombol disable style saat proses transisi (opsional) */
-#openBtn[disabled] {
-  cursor: default;
-  opacity: 0.8;
-  filter: saturate(0.9);
+.event-map a:hover {
+  background: #b8942c;
 }

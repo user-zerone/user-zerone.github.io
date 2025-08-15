@@ -1,6 +1,6 @@
 
 
-/* ===== Slide 5 - Detail Acara ===== */
+/* ===== Slide 4 - Detail Acara ===== */
 .section-title {
   font-family: 'Playfair Display', serif;
   font-size: 2rem;
@@ -64,4 +64,14 @@
 
 .event-map a:hover {
   background: #b8942c;
+}
+
+.event-map-iframe {
+  width: 100%;
+  max-width: 800px;
+  height: 300px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-top: 15px;
 }
